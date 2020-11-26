@@ -1,7 +1,18 @@
 <?xml version="1.0"?>
 <robot name="test_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <link name="base_footprint">
+  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
+  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+
+  <link name="base_footprint"/>
+
+  <joint name="footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <link name="base_link">
     <visual>
       <origin rpy="0 0 0 " xyz="0 0 0.005"/>
       <geometry>
@@ -24,37 +35,19 @@
     </inertial>
   </link>
 
-  <joint name="footprint_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0.01"/>
-  </joint>
-
-  <link name="base_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <sphere radius="0.01"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <sphere radius="0.01"/>
-      </geometry>
-    </collision>
-  </link>
-
   <!-- TEST -->
 
-  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
-  <xacro:realsense_T265 sensor_name="camera" parent_link="base_link" rate="30.0">
-    <origin rpy="0 0 0" xyz="0 0 0.5"/>
-  </xacro:realsense_T265>
+  <xacro:realsense_d435 sensor_name="d435" parent_link="base_link" rate="10">
+    <origin rpy="0 0 0 " xyz="0 0 0.5"/>
+  </xacro:realsense_d435>
 
-  <!-- <xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
-  <xacro:realsense_R200 sensor_name="camera" parent_link="base_link" rate="30.0">
+  <!-- <xacro:realsense_T265 sensor_name="camera" parent_link="base_link" rate="30.0">
+    <origin rpy="0 0 0" xyz="0 0 0.5"/>
+  </xacro:realsense_T265> -->
+
+  <!-- <xacro:realsense_R200 sensor_name="camera" parent_link="base_link" rate="30.0">
     <origin rpy="0 0 0" xyz="0 0 0.5"/>
   </xacro:realsense_R200> -->
+
 
 </robot>

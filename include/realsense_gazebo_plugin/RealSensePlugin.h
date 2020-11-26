@@ -25,92 +25,115 @@
 #include <gazebo/sensors/sensors.hh>
 #include <sdf/sdf.hh>
 
-#include <string>
 #include <memory>
+#include <string>
 
-namespace gazebo
-{
+namespace gazebo {
+#define DEPTH_CAMERA_NAME "depth"
+#define COLOR_CAMERA_NAME "color"
+#define IRED1_CAMERA_NAME "ired1"
+#define IRED2_CAMERA_NAME "ired2"
 
-  #define DEPTH_CAMERA_NAME "depth"
-  #define COLOR_CAMERA_NAME "color"
-  #define IRED1_CAMERA_NAME "ired1"
-  #define IRED2_CAMERA_NAME "ired2"
+struct CameraParams {
+  CameraParams() {}
 
-  /// \brief A plugin that simulates Real Sense camera streams.
-  class RealSensePlugin : public ModelPlugin
-  {
-    /// \brief Constructor.
-    public: RealSensePlugin();
+  std::string topic_name;
+  std::string camera_info_topic_name;
+  std::string optical_frame;
+};
 
-    /// \brief Destructor.
-    public: ~RealSensePlugin();
+/// \brief A plugin that simulates Real Sense camera streams.
+class RealSensePlugin : public ModelPlugin {
+  /// \brief Constructor.
+public:
+  RealSensePlugin();
 
-    // Documentation Inherited.
-    public: virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+  /// \brief Destructor.
+  ~RealSensePlugin();
 
-    /// \brief Callback for the World Update event.
-    public: void OnUpdate();
+  // Documentation Inherited.
+  virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
 
-    /// \brief Callback that publishes a received Depth Camera Frame as an
-    /// ImageStamped
-    /// message.
-    public: virtual void OnNewDepthFrame();
+  /// \brief Callback for the World Update event.
+  void OnUpdate();
 
-    /// \brief Callback that publishes a received Camera Frame as an
-    /// ImageStamped message.
-    public: virtual void OnNewFrame(const rendering::CameraPtr cam,
-                                    const transport::PublisherPtr pub);
+  /// \brief Callback that publishes a received Depth Camera Frame as an
+  /// ImageStamped
+  /// message.
+  virtual void OnNewDepthFrame();
 
-    /// \brief Pointer to the model containing the plugin.
-    protected: physics::ModelPtr rsModel;
+  /// \brief Callback that publishes a received Camera Frame as an
+  /// ImageStamped message.
+  virtual void OnNewFrame(const rendering::CameraPtr cam,
+                          const transport::PublisherPtr pub);
 
-    /// \brief Pointer to the world.
-    protected: physics::WorldPtr world;
+protected:
+  /// \brief Pointer to the model containing the plugin.
+  physics::ModelPtr rsModel;
 
-    /// \brief Pointer to the Depth Camera Renderer.
-    protected: rendering::DepthCameraPtr depthCam;
+  /// \brief Pointer to the world.
+  physics::WorldPtr world;
 
-    /// \brief Pointer to the Color Camera Renderer.
-    protected: rendering::CameraPtr colorCam;
+  /// \brief Pointer to the Depth Camera Renderer.
+  rendering::DepthCameraPtr depthCam;
 
-    /// \brief Pointer to the Infrared Camera Renderer.
-    protected: rendering::CameraPtr ired1Cam;
+  /// \brief Pointer to the Color Camera Renderer.
+  rendering::CameraPtr colorCam;
 
-    /// \brief Pointer to the Infrared2 Camera Renderer.
-    protected: rendering::CameraPtr ired2Cam;
+  /// \brief Pointer to the Infrared Camera Renderer.
+  rendering::CameraPtr ired1Cam;
 
-    /// \brief Pointer to the transport Node.
-    protected: transport::NodePtr transportNode;
+  /// \brief Pointer to the Infrared2 Camera Renderer.
+  rendering::CameraPtr ired2Cam;
 
-    // \brief Store Real Sense depth map data.
-    protected: std::vector<uint16_t> depthMap;
+  /// \brief String to hold the camera prefix
+  std::string prefix;
 
-    /// \brief Pointer to the Depth Publisher.
-    protected: transport::PublisherPtr depthPub;
+  /// \brief Pointer to the transport Node.
+  transport::NodePtr transportNode;
 
-    /// \brief Pointer to the Color Publisher.
-    protected: transport::PublisherPtr colorPub;
+  // \brief Store Real Sense depth map data.
+  std::vector<uint16_t> depthMap;
 
-    /// \brief Pointer to the Infrared Publisher.
-    protected: transport::PublisherPtr ired1Pub;
+  /// \brief Pointer to the Depth Publisher.
+  transport::PublisherPtr depthPub;
 
-    /// \brief Pointer to the Infrared2 Publisher.
-    protected: transport::PublisherPtr ired2Pub;
+  /// \brief Pointer to the Color Publisher.
+  transport::PublisherPtr colorPub;
 
-    /// \brief Pointer to the Depth Camera callback connection.
-    protected: event::ConnectionPtr newDepthFrameConn;
+  /// \brief Pointer to the Infrared Publisher.
+  transport::PublisherPtr ired1Pub;
 
-    /// \brief Pointer to the Depth Camera callback connection.
-    protected: event::ConnectionPtr newIred1FrameConn;
+  /// \brief Pointer to the Infrared2 Publisher.
+  transport::PublisherPtr ired2Pub;
 
-    /// \brief Pointer to the Infrared Camera callback connection.
-    protected: event::ConnectionPtr newIred2FrameConn;
+  /// \brief Pointer to the Depth Camera callback connection.
+  event::ConnectionPtr newDepthFrameConn;
 
-    /// \brief Pointer to the Color Camera callback connection.
-    protected: event::ConnectionPtr newColorFrameConn;
+  /// \brief Pointer to the Depth Camera callback connection.
+  event::ConnectionPtr newIred1FrameConn;
 
-    /// \brief Pointer to the World Update event connection.
-    protected: event::ConnectionPtr updateConnection;
-  };
+  /// \brief Pointer to the Infrared Camera callback connection.
+  event::ConnectionPtr newIred2FrameConn;
+
+  /// \brief Pointer to the Color Camera callback connection.
+  event::ConnectionPtr newColorFrameConn;
+
+  /// \brief Pointer to the World Update event connection.
+  event::ConnectionPtr updateConnection;
+
+  std::map<std::string, CameraParams> cameraParamsMap_;
+
+  bool pointCloud_ = false;
+  std::string pointCloudTopic_;
+  double pointCloudCutOff_, pointCloudCutOffMax_;
+
+  double colorUpdateRate_;
+  double infraredUpdateRate_;
+  double depthUpdateRate_;
+
+  float rangeMinDepth_;
+  float rangeMaxDepth_;
+};
 }
 #endif

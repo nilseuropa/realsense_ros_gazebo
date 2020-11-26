@@ -1,7 +1,10 @@
-# realsense_ros_gazebo
-Intel Realsense Tracking and Depth camera simulations
+# Intel RealSense Gazebo/ROS
+Intel Realsense Tracking and Depth camera simulations and URDF macros.
 
-# Realsense T265 #
+
+
+## RealSense T265 ##
+
 ![](doc/t265.png)
 
 ### Usage ###
@@ -14,20 +17,15 @@ Intel Realsense Tracking and Depth camera simulations
 ```
 
 ### Publishers ###
-* /camera/**fisheye1**/camera_info
-* /camera/fisheye1/image_raw
-* /camera/fisheye1/image_raw/compressed
-* /camera/fisheye1/parameter_descriptions
-* /camera/fisheye1/parameter_updates
-* /camera/fisheye2/camera_info
-* /camera/fisheye2/image_raw
-* /camera/fisheye2/image_raw/compressed
-* /camera/fisheye2/parameter_descriptions
-* /camera/fisheye2/parameter_updates
+* /camera/**fisheye1**/*
+* /camera/**fisheye2**/*
 * /camera/**gyro**/sample _( accel and gyro are in the same imu message )_
 * /camera/**odom**/sample
 
-# Realsense R200 #
+
+
+## RealSense R200 ##
+
 ![](doc/r200.png)
 
 ### Usage ###
@@ -41,4 +39,30 @@ Intel Realsense Tracking and Depth camera simulations
 
 ### Publishers ###
 
-:construction:
+* /camera/**color**/*
+* /camera/**depth**/*
+* /camera/**infra1**/*
+* /camera/**infra2**/*
+
+
+
+## RealSense D435
+
+![](doc/d435.png)
+
+### Usage ###
+
+```xml
+<xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+
+<xacro:realsense_d435 sensor_name="d435" parent_link="base_link" rate="10">
+  <origin rpy="0 0 0 " xyz="0 0 0.5"/>
+</xacro:realsense_d435>
+```
+
+### Publishers ###
+
+* /camera/**color**/*
+* /camera/**depth**/*
+* /camera/**infra1**/*
+* /camera/**infra2**/*

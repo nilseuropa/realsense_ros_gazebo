@@ -1,38 +1,54 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(realsense_ros_gazebo)
 
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs std_srvs geometry_msgs nav_msgs tf dynamic_reconfigure message_generation)
-include_directories(include ${catkin_INCLUDE_DIRS})
-
-if(POLICY CMP0054)
-  cmake_policy(SET CMP0054 NEW)
-endif()
-
-find_package(gazebo REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
-include_directories(${GAZEBO_INCLUDE_DIRS})
-link_directories(${GAZEBO_LIBRARY_DIRS})
+find_package(catkin REQUIRED COMPONENTS
+  gazebo_dev
+  gazebo_msgs
+  roscpp
+  nodelet
+  sensor_msgs
+  urdf
+  tf
+  tf2_ros
+  rosconsole
+  diagnostic_updater
+  std_msgs
+  gazebo_ros
+  image_transport
+  camera_info_manager
+)
 
 find_package(Boost REQUIRED COMPONENTS thread)
-include_directories(${Boost_INCLUDE_DIRS})
+# find_package(gazebo REQUIRED)
 
-add_service_files(
-  FILES
-  SetBias.srv
+include_directories(include
+  ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
 )
 
-generate_messages(
-  DEPENDENCIES geometry_msgs
-)
-
-generate_dynamic_reconfigure_options(
-  cfg/SensorModel.cfg
+link_directories(
+  ${catkin_LIBRARY_DIRS}
 )
 
 catkin_package(
-    CATKIN_DEPENDS roscpp std_msgs geometry_msgs nav_msgs tf message_runtime
-    INCLUDE_DIRS include
-    LIBRARIES
+  INCLUDE_DIRS include
+  LIBRARIES
+  CATKIN_DEPENDS
+  message_runtime
+  gazebo_msgs
+  roscpp
+  nodelet
+  geometry_msgs
+  sensor_msgs
+  urdf
+  tf
+  tf2_ros
+  rosconsole
+  std_msgs
+  gazebo_ros
+  image_transport
+  camera_info_manager
 )
 
 ###########
