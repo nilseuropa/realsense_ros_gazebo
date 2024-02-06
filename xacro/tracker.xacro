@@ -105,7 +105,7 @@
         <visual>
             <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://realsense_ros_gazebo/meshes/realsense_t265.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="file://$(find realsense_ros_gazebo)/meshes/realsense_t265.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </visual>
         <collision>

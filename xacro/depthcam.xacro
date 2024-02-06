@@ -37,7 +37,7 @@
       <visual>
         <origin xyz="${d435_cam_mount_from_center_offset} ${-d435_cam_depth_py} 0" rpy="${pi/2} 0 ${pi/2}"/>
         <geometry>
-          <mesh filename="package://realsense_ros_gazebo/meshes/realsense_d435.stl" />
+          <mesh filename="file://$(find realsense_ros_gazebo)/meshes/realsense_d435.stl" />
         </geometry>
       </visual>
       <collision>
@@ -253,7 +253,7 @@
           <visual>
               <origin rpy="0 0 0" xyz="0 0 0"/>
               <geometry>
-                  <mesh filename="package://realsense_ros_gazebo/meshes/realsense_r200/meshes/realsense.dae"/>
+                  <mesh filename="file://$(find realsense_ros_gazebo)/meshes/realsense_r200/meshes/realsense.dae"/>
               </geometry>
           </visual>
           <collision>

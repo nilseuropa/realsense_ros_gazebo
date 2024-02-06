@@ -1,4 +1,4 @@
-# Intel RealSense Gazebo/ROS
+# Intel RealSense Gazebo/ROS2 Humble
 Intel Realsense Tracking and Depth camera simulations and URDF macros.
 
 

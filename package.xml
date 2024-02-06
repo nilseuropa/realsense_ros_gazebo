@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
 
   <name>realsense_ros_gazebo</name>
   <version>1.2.0</version>
@@ -8,32 +8,25 @@
 
   <author email="sergey.dorodnicov@intel.com">Sergey Dorodnicov</author>
   <author email="doron.hirshberg@intel.com">Doron Hirshberg</author>
-  <author email="marton@neorobot.hu">Marton Juhasz</author>
+  <author email="marton@nowtech.hu">Marton Juhasz</author>
 
   <license>Apache 2.0</license>
 
-  <maintainer email="marton@neorobot.hu">nilseuropa</maintainer>
+  <maintainer email="marton@nowtech.hu">nilseuropa</maintainer>
 
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>gazebo_dev</build_depend>
-  <build_depend>message_generation</build_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <depend>gazebo_msgs</depend>
-  <depend>geometry_msgs</depend>
-  <depend>sensor_msgs</depend>
-  <depend>roscpp</depend>
-  <depend>nodelet</depend>
-  <depend>urdf</depend>
-  <depend>tf</depend>
-  <depend>tf2_ros</depend>
-  <depend>rosconsole</depend>
-  <depend>diagnostic_updater</depend>
-  <depend>std_msgs</depend>
   <depend>gazebo_ros</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
   <depend>image_transport</depend>
   <depend>camera_info_manager</depend>
 
-  <exec_depend>gazebo</exec_depend>
-  <exec_depend>message_runtime</exec_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 
 </package>
