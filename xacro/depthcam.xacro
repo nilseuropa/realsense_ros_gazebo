@@ -13,7 +13,7 @@
     <xacro:property name="d435_cam_width" value="0.090"/>
     <xacro:property name="d435_cam_height" value="0.025"/>
     <xacro:property name="d435_cam_depth" value="0.02505"/>
-    <xacro:property name="d435_cam_mass" value="0.564"/>
+    <xacro:property name="d435_cam_mass" value="0.072"/>
     <xacro:property name="d435_cam_mount_from_center_offset" value="0.0149"/>
     <xacro:property name="d435_cam_depth_px" value="${d435_cam_mount_from_center_offset}"/>
     <xacro:property name="d435_cam_depth_py" value="0.0175"/>
